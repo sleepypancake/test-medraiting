@@ -113,36 +113,58 @@ $(document).mouseup(function (e) { // событие клика по веб-до
   });
 
 
-  
+// добавление - изъятие из хранилища 
+var favData = [];
+
+const favorites = {
+    key: 'favorites',
+    get: ()=>{
+        let data = localStorage.getItem(favorites.key);
+        if (!data) {favData=[];}  else {
+            favData=JSON.parse(data);
+        }
+    },
+    add: (obj)=>{
+        favorites.get();
+        favData.push(obj)
+        localStorage.setItem(favorites.key,JSON.stringify(favData));
+    },
+    delete: (obj)=>{
+        favorites.get();
+        favData = favData.filter(i => i.id !== obj.id);
+        localStorage.setItem(favorites.key,JSON.stringify(favData));
+    }
+}
+
 // добавить в избранное
 $('body').on('click','.star', function () {
-    $(this).hasClass('active') ?  $(this).removeClass('active') : $(this).addClass('active')
     const photoId = $(this).parent().data('id')
     const starredPhoto = {
-        'id': $(this).parent().data('id'),
+        'id': photoId,
         'title': $(this).siblings('img').attr('title'),
         'thumbnailUrl': $(this).siblings('img').attr('src'),
         'url': $(this).siblings('img').data('src')
     }
-
-    localStorage.getItem(photoId) ? localStorage.removeItem(photoId) : localStorage.setItem(photoId, JSON.stringify(starredPhoto))
+    if ($(this).hasClass('active')) {
+        $(this).removeClass('active')
+        favorites.delete(starredPhoto)
+    } else {
+        $(this).addClass('active')
+        favorites.add(starredPhoto)
+    }
 
 
 })
 
-
 // получение избранного 
 $('body').on('click','.getFavorites', function () {
-    const arrFavs = [];
-
-    for(let i =0; i < localStorage.length; i++){
-        arrFavs.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
-      }
+    
+    favorites.get()
 
       $('.content').html(
         `<ul class="user__photos">`
     )
-    for (let item of arrFavs) {
+    for (let item of favData) {
         item.title ? $('.user__photos').append(createPhotoFavItem(item, 'active favItem'), `</ul>`) : null
     }
 })
