@@ -1,0 +1,125 @@
+body {
+    font-family: 'montserrat', sans-serif;
+}
+
+.wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px 10%;
+    position: relative;
+}
+
+@media screen and (min-width: 1200px) {
+    .wrap {
+        padding: 30px 20%;
+    }
+}
+
+.header {
+    margin-bottom: 30px;
+}
+
+.header__btn {
+    background: none;
+    border: none;
+    padding: 3px 10px;
+    color: #28c4b0;
+    text-decoration: underline;
+}
+
+a {
+    text-decoration: none;
+    color: #302623;
+}
+
+ul {
+    margin: 10px 0;
+}
+
+li {
+    padding: 5px 7px;
+}
+
+a.collapse {
+    position: relative;
+}
+a.collapse:before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-top: 1px solid #000;
+    border-right: 1px solid #000;
+    transform: rotate(45deg);
+    position: absolute;
+    left: -17px;
+    top: 4px;
+}
+
+a.collapse.show:before {
+    transform: rotate(135deg);
+}
+
+.user__photo {
+    position: relative;
+}
+
+.user__photo span {
+    display: block;
+    padding: 20px 0;
+}
+
+.star {
+    background-color: #ced2d7;
+    -webkit-clip-path: polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+    clip-path: polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    border: none;
+    position: absolute;
+    left: 0;
+}
+
+.star.active {
+    background: gold;
+    text-shadow: 1px 1px #000;
+}
+
+img.user__photo--thumb {
+    margin-left: 30px;
+}
+
+.photo {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: rgba(20,20,33, 0.9);
+    padding: 50px 0;
+    text-align: center;
+}
+
+.photo:after {
+    content: "✘";
+    position: absolute;
+    color: #fff;
+    top: 3%;
+    right: 3%;
+    cursor: pointer;
+    font-size: 22px;
+}
+
+
+
+@media (max-width: 768px) {
+    img.user__photo--thumb {
+        width: 100px;
+        height: 100%;
+    }
+
+    .photo img {
+        width: 80%;
+    }
+}
